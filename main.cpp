@@ -88,16 +88,13 @@ short evaluate_board(char board[3][3])
 
 
 
-short minimax(char board[3][3], short depth, bool is_maximizing_player)
+short minimax(char board[3][3], short depth, bool is_maximizing_player, short alpha, short beta)
 {
     short score = evaluate_board(board);
 
-    if (score == -10 || score == 10)
+    if (score == -10 || score == 10 || !are_moves_left(board))
         return score;
-    
-    if (!are_moves_left(board))
-        return 0;
-    
+
     if (is_maximizing_player)
     {
         short best = -1000;
@@ -108,8 +105,12 @@ short minimax(char board[3][3], short depth, bool is_maximizing_player)
                 {   
                     char board_value = board[row][column];
                     board[row][column] = 'O';
-                    best = std::max(best, minimax(board, depth + 1, !is_maximizing_player));
+                    best = std::max(best, minimax(board, depth + 1, !is_maximizing_player, alpha, beta));
                     board[row][column] = board_value;
+
+                    alpha = std::max(alpha, best);
+                    if (alpha >= beta)
+                        break;
                 }
         
         return best;
@@ -125,8 +126,12 @@ short minimax(char board[3][3], short depth, bool is_maximizing_player)
                 {
                     char board_value = board[row][column];
                     board[row][column] = 'X';
-                    best = std::min(best, minimax(board, depth + 1, !is_maximizing_player));
+                    best = std::min(best, minimax(board, depth + 1, !is_maximizing_player, alpha, beta));
                     board[row][column] = board_value;
+
+                    beta = std::min(beta, best);
+                    if (alpha >= beta)
+                        break;
                 }
         
         return best;
@@ -145,7 +150,7 @@ void find_best_move(char board[3][3], short best_move[2])
             {
                 char board_value = board[row][column];
                 board[row][column] = 'O';
-                short move_value = minimax(board, 0, false);
+                short move_value = minimax(board, 0, false, -1000, 1000);
                 board[row][column]= board_value;
 
                 if (move_value > best_value)
