@@ -1,0 +1,8 @@
+#ifndef CONFIGURATION_H
+
+#define WINDOW_WIDTH 600
+#define WINDOW_HEIGHT 600
+#define CELL_WIDTH (WINDOW_WIDTH / 3)
+#define CELL_HEIGHT (WINDOW_HEIGHT / 3)
+
+#endif
