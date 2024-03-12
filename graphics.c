@@ -9,7 +9,7 @@ void render_grid (SDL_Renderer *renderer)
 {
     SDL_SetRenderDrawColor(renderer, 255, 255, 255, SDL_ALPHA_OPAQUE);
 
-    for (unsigned short i = 1; i < 3; i ++)
+    for (unsigned short i = 1; i < 3; i++)
     {
         SDL_RenderDrawLine(renderer,
                            i * CELL_WIDTH, 0,
@@ -23,7 +23,7 @@ void render_grid (SDL_Renderer *renderer)
 
 
 
-void render_X (SDL_Renderer *renderer, short row, short column)
+void render_X (SDL_Renderer *renderer, const unsigned short row, const unsigned short column)
 {
     SDL_SetRenderDrawColor(renderer, 255, 255, 255, SDL_ALPHA_OPAQUE);
 
@@ -38,16 +38,18 @@ void render_X (SDL_Renderer *renderer, short row, short column)
 
 
 
-void render_O (SDL_Renderer* renderer, unsigned short row, unsigned short column)
+void render_O (SDL_Renderer* renderer, const unsigned short row, const unsigned short column)
 {
-    short center_x = CELL_WIDTH * (column + 0.5);
-    short center_y = CELL_HEIGHT * (row + 0.5);
-    short radius = CELL_WIDTH / 2 - 10;
+    const unsigned short center_x = CELL_WIDTH * (column + 0.5);
+    const unsigned short center_y = CELL_HEIGHT * (row + 0.5);
+    const unsigned short radius = (short) ((CELL_WIDTH >> 1) - 10);
+    const unsigned short diameter = (short) (radius << 1);
+
     short x = radius - 1;
     short y = 0;
     short tx = 1;
     short ty = 1;
-    short error = tx - radius * 2;
+    short error = tx - diameter;
 
     SDL_SetRenderDrawColor(renderer, 255, 0, 0, SDL_ALPHA_OPAQUE);
 
@@ -74,14 +76,14 @@ void render_O (SDL_Renderer* renderer, unsigned short row, unsigned short column
         {
             x--;
             tx += 2;
-            error += tx - radius * 2;
+            error += tx - diameter;
         }
     }
 }
 
 
 
-void render_board (SDL_Renderer *renderer, char board[3][3])
+void render_board (SDL_Renderer *renderer, const char board[3][3])
 {
     for (unsigned short row = 0; row < 3; row ++)
         for (unsigned short column = 0; column < 3; column ++)
@@ -94,7 +96,7 @@ void render_board (SDL_Renderer *renderer, char board[3][3])
 
 
 
-void render (SDL_Renderer *renderer, char board[3][3])
+void render (SDL_Renderer *renderer, const char board[3][3])
 {
     SDL_SetRenderDrawColor (renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
     SDL_RenderClear (renderer);

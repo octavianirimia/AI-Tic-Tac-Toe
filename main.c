@@ -66,7 +66,7 @@ int main(void)
                 x_move[0] = (short)(event.button.y / CELL_HEIGHT);
                 x_move[1] = (short)(event.button.x / CELL_WIDTH);
 
-                unsigned short result = logic (board, x_move, o_move);
+                const unsigned short result = logic (board, x_move, o_move);
 
                 render (renderer, board);
 

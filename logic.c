@@ -12,7 +12,7 @@ short min(short a, short b)
 
 
 
-char is_cell_empty(char board[3][3], unsigned short position[2])
+char is_cell_empty(const char board[3][3], const unsigned short position[2])
 {
     if (board[position[0]][position[1]] == ' ')
         return 't';
@@ -23,7 +23,7 @@ char is_cell_empty(char board[3][3], unsigned short position[2])
 
 
 //This function returns true if there are moves remaining, else it return false
-char are_moves_left(char board[3][3])
+char are_moves_left(const char board[3][3])
 {
     for (unsigned short row = 0; row < 3 ; row ++)
         for (unsigned short column = 0; column < 3; column ++)
@@ -35,7 +35,7 @@ char are_moves_left(char board[3][3])
 
 
 
-short evaluate_board(char board[3][3])
+short evaluate_board(const char board[3][3])
 {
     // Checking on rows
     for (unsigned short row = 0; row < 3; row ++)
@@ -156,7 +156,7 @@ void find_best_move(char board[3][3], unsigned short best_move[2])
 
 
 
-void move_player(char board[3][3], unsigned short x_move[2])
+void move_player(char board[3][3], const unsigned short x_move[2])
 {
     if (is_cell_empty(board, x_move) == 't')
         board[x_move[0]][x_move[1]] = 'X';
